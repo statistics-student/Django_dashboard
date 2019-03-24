@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>悦才数据运营用户登录界面</title>
+      <link rel="stylesheet" href="/static/assets/css/style-login.css">
+</head>
+<img src="/static/img/logo.png">
+<body>
+
+  <body>
+  <h1 style="position: right">悦才数据运营监控登录界面</h1>
+  <hr>
+  <br><br><br><br><br>
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Login</h1>
+			</div>
+
+			<div class="login-form">
+                {% if password_wrong %}
+                    <h3 style="color:red">用户名或者密码错误！</h3>
+                {% endif %}
+                <form action="login" method="post">
+				<div class="control-group">
+				<input type="text" class="login-field" placeholder="username" id="login-name" name="username">
+				<label class="login-field-icon fui-user" for="login-name"></label>
+				</div>
+
+				<div class="control-group">
+				<input type="password" class="login-field" placeholder="password" id="login-pass" name="password">
+				<label class="login-field-icon fui-lock" for="login-pass"></label>
+				</div>
+                <input type="submit" value="登录" style="background-color: #00aced">
+                    </form>
+				<!--<a class="btn btn-primary btn-large btn-block" type="submit">login</a>-->
+				<p class="login-link" href="#">Lost your password?</br>请联系管理员</p>
+
+			</div>
+		</div>
+	</div>
+</body>
+
+
+
+</body>
+
+</html>

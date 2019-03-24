@@ -1,0 +1,235 @@
+{%  extends 'base.html' %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="180">
+    <script src="/static/js/echarts.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.ba-resize.min.js"></script>
+</head>
+{% block chart0 %}
+<canvas id="loan"></canvas>
+{% endblock %}
+{% block chart1 %}
+<canvas id="amt_total"></canvas>
+{% endblock %}
+{% block chart2 %}
+<canvas id="amt_add"></canvas>
+{% endblock %}
+{% block js %}
+    <script>
+    var ctx = document.getElementById("loan").getContext('2d');
+    var data_item={{ data_loan_tty_7|safe }};
+     var data_today={{ data_loan_tty_today|safe}};
+     var series=[];
+     var colors=["rgba(220,220,220,1)","rgba(255,218,185,1)","rgba(0,134,139,1)","rgba(67,205,128,1)","rgba(255,106,106,1)","rgba(148,0,211,1)","rgba(255,165,0,1)"];
+     var i=0;
+     for (var key in data_item){
+        series.push({
+　　　　label:key,
+        borderColor:colors[i],
+        pointBackgroundColor: colors[i],
+            radius:1,
+        pointStyle:'line',
+       data:data_item[key],
+       fill:false
+　　　　});
+     i=i+1;};
+     series.push({
+         label:'今天',
+         borderColor:"rgba(255,0,0,0.8)",
+         pointStyle:'line',
+         backgroundColor:"rgba(255,0,0,0.1)",
+         radius:1,
+         hoverRadius:5,
+         borderWidth:6,
+         data:data_today,
+         fill:false
+     });
+    var data={
+        labels:['0:00','0:15','0:30','0:45','1:00','1:15','1:30','1:45','2:00','2:15','2:30','2:45','3:00','3:15','3:30','3:45','4:00','4:15','4:30','4:45','5:00','5:15','5:30','5:45','6:00','6:15','6:30','6:45','7:00','7:15','7:30','7:45','8:00','8:15','8:30','8:45','9:00','9:15','9:30','9:45','10:00','10:15','10:30','10:45','11:00','11:15','11:30','11:45','12:00','12:15','12:30','12:45','13:00','13:15','13:30','13:45','14:00','14:15','14:30','14:45','15:00','15:15','15:30','15:45','16:00','16:15','16:30','16:45','17:00','17:15','17:30','17:45','18:00','18:15','18:30','18:45','19:00','19:15','19:30','19:45','20:00','20:15','20:30','20:45','21:00','21:15','21:30','21:45','22:00','22:15','22:30','22:45','23:00','23:15','23:30','23:45','24:00'],
+        datasets:series
+    };
+    var options = {
+
+                     scaleFontStyle: "normal",
+                    title:{
+                         display:true,
+                        text:'一万元注册趋势图',
+                        fontSize: 20,
+                        fontStyle:'bold',
+                        padding:15,
+                        lineHeight:0.8
+                    },
+        legend: {
+            display: true,
+            position:'right',
+            labels:{
+                boxWidth:15,
+                fontFamily:'Helvetica Neue',
+                fontSize:10
+            }
+        },
+         scales: {
+            yAxes: [{
+                ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: 7000
+                }
+            }]
+        },
+showScale: true,
+        responsive: true,
+               };
+    var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: data,
+    options:options
+});
+</script>
+ <script>
+    var ctx = document.getElementById("amt_total").getContext('2d');
+   var data_item={{ data_amt_tty_4|safe }}
+    var data_today={{ data_amt_tty_today|safe}}
+     var series=[];
+     var colors=["rgba(255,218,185,1)","rgba(67,205,128,1)","rgba(148,0,211,1)","rgba(255,165,0,1)"];
+     var i=0;
+    for (var key in data_item){
+        series.push({
+　　　　label:key,
+        borderColor:colors[i],
+        pointBackgroundColor: colors[i],
+            radius:1,
+        pointStyle:'line',
+       data:data_item[key],
+       fill:false
+　　　　});
+     i=i+1;};
+     series.push({
+         label:'今天',
+         borderColor:"rgba(255,0,0,0.8)",
+         pointStyle:'line',
+         backgroundColor:"rgba(255,0,0,0.1)",
+         radius:1,
+         hoverRadius:5,
+         borderWidth:6,
+         data:data_today,
+         fill:false
+     });
+    var data={
+        labels:['8:00','8:15','8:30','8:45','9:00','9:15','9:30','9:45','10:00','10:15','10:30','10:45','11:00','11:15','11:30','11:45','12:00','12:15','12:30','12:45','13:00','13:15','13:30','13:45','14:00','14:15','14:30','14:45','15:00','15:15','15:30','15:45','16:00','16:15','16:30','16:45','17:00','17:15','17:30','17:45','18:00','18:15','18:30','18:45','19:00','19:15','19:30','19:45','20:00','20:15','20:30','20:45','21:00','21:15','21:30','21:45','22:00','22:15','22:30','22:45','23:00','23:15','23:30','23:45'],
+        datasets:series
+    };
+    var options = {
+
+                     scaleFontStyle: "normal",
+                    title:{
+                         display:true,
+                        text:'一万元总体放款趋势图',
+                        fontSize: 20,
+                        fontStyle:'bold',
+                        padding:15,
+                        lineHeight:0.8
+                    },
+        legend: {
+            display: true,
+            position:'right',
+            labels:{
+                boxWidth:15,
+                fontFamily:'Helvetica Neue',
+                fontSize:10
+            }
+        },
+         scales: {
+            yAxes: [{
+                ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: 2000000
+                }
+            }]
+        },
+showScale: true,
+        responsive: true,
+               };
+    var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: data,
+    options:options
+});
+</script>
+ <script>
+    var ctx = document.getElementById("amt_add").getContext('2d');
+    var data_item={{ data_amt_add_tty_4|safe }};
+    var data_today={{ data_amt_add_tty_today|safe}};
+     var series=[];
+    var colors=["rgba(255,218,185,1)","rgba(67,205,128,1)","rgba(148,0,211,1)","rgba(255,165,0,1)"];
+     var i=0;
+     for (var key in data_item){
+        series.push({
+　　　　label:key,
+        borderColor:colors[i],
+        pointBackgroundColor: colors[i],
+            radius:1,
+        pointStyle:'line',
+       data:data_item[key],
+       fill:false
+　　　　});
+     i=i+1;};
+     series.push({
+         label:'今天',
+         borderColor:"rgba(255,0,0,0.8)",
+         pointStyle:'line',
+         backgroundColor:"rgba(255,0,0,0.1)",
+         radius:1,
+         hoverRadius:5,
+         borderWidth:6,
+         data:data_today,
+         fill:false
+     });
+    var data={
+        labels:['8:00','8:15','8:30','8:45','9:00','9:15','9:30','9:45','10:00','10:15','10:30','10:45','11:00','11:15','11:30','11:45','12:00','12:15','12:30','12:45','13:00','13:15','13:30','13:45','14:00','14:15','14:30','14:45','15:00','15:15','15:30','15:45','16:00','16:15','16:30','16:45','17:00','17:15','17:30','17:45','18:00','18:15','18:30','18:45','19:00','19:15','19:30','19:45','20:00','20:15','20:30','20:45','21:00','21:15','21:30','21:45','22:00','22:15','22:30','22:45','23:00','23:15','23:30','23:45'],
+        datasets:series
+    };
+    var options = {
+
+                     scaleFontStyle: "normal",
+                    title:{
+                         display:true,
+                        text:'一万元新增放款趋势图',
+                        fontSize: 20,
+                        fontStyle:'bold',
+                        padding:15,
+                        lineHeight:0.8
+                    },
+        legend: {
+            display: true,
+            position:'right',
+            labels:{
+                boxWidth:15,
+                fontFamily:'Helvetica Neue',
+                fontSize:10
+            }
+        },
+         scales: {
+            yAxes: [{
+                ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: 500000
+                }
+            }]
+        },
+showScale: true,
+        responsive: true,
+               };
+    var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: data,
+    options:options
+});
+</script>
+{% endblock %}
+</html>
